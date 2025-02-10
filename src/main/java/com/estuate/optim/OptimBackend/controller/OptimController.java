@@ -5,6 +5,7 @@ import com.estuate.optim.OptimBackend.service.UserService;
 import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,7 +63,7 @@ public class OptimController {
 
     @GetMapping("/showDatabases")
     public ResponseEntity<?> showDB(){
-        userService.getAllSchemas();
-        return ResponseEntity.ok("Databases");
+       List<String> databases =userService.getAllSchemas();
+        return ResponseEntity.ok(databases);
     }
 }
