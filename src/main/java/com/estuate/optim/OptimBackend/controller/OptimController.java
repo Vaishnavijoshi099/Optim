@@ -7,8 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -61,9 +62,20 @@ public class OptimController {
         return ResponseEntity.ok("User deleted successfully!!");
     }
 
-    @GetMapping("/showDatabases")
-    public ResponseEntity<?> showDB(){
-       List<String> databases =userService.getAllSchemas();
-        return ResponseEntity.ok(databases);
+        // Get all tables dynamically
+        @GetMapping("/tables")
+        public List<Map<String, Object>> getTables() {
+            return userService.getTables();
+        }
+
+        // Get table columns dynamically
+        @GetMapping("/tables/{tableName}/columns")
+        public List<Map<String, Object>> getTableColumns(@PathVariable String tableName) {
+            return userService.getTableColumns(tableName);
+        }
     }
-}
+
+
+
+
+
